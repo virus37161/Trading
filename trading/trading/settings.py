@@ -203,13 +203,3 @@ LOGGING = {
     }
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trading',
-        'USER': 'postgres',
-        'PASSWORD': 'Gertop_virus37',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-}
