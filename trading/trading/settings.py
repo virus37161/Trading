@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'unton.edgar.2001'
-EMAIL_HOST_PASSWORD = 'katzgcjilsjurudr'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'unton.edgar.2001@yandex.ru'
 
@@ -203,13 +203,3 @@ LOGGING = {
     }
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trading',
-        'USER': 'postgres',
-        'PASSWORD': 'Gertop_virus37',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-}
