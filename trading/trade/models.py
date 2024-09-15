@@ -23,6 +23,7 @@ class ContractTF(models.Model):
     stop_loss = models.IntegerField(default=0,verbose_name="CЛ в %")
     take_profit_1 = models.IntegerField(default=0, verbose_name="ТП1 в %")
     take_profit_2 = models.IntegerField(default=0, verbose_name="ТП2 в %")
+    signals_quantity = models.IntegerField(default=0, verbose_name="Кол.сигналов")
 
     def check_stop_loss(self):
         if len(self.signals_set.all())== 0:
@@ -52,6 +53,11 @@ class ContractTF(models.Model):
                 self.signals_set.all())) * 100)
             self.save()
 
+
+    def check_signals_quantity(self):
+        self.signals_quantity = len(self.signals_set.all())
+        self.save()
+
     class Meta:
         verbose_name_plural = "Контракты"
         verbose_name = "Контракт"
@@ -73,6 +79,7 @@ class Signals(models.Model):
     contractTF = models.ForeignKey(ContractTF, on_delete=models.CASCADE)
     some_data = models.DateField(auto_now_add=True)
     some_time = models.TimeField(auto_now_add=True)
+    check_scan = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Сигналы"
@@ -80,6 +87,7 @@ class Signals(models.Model):
 
 class SettingsApp(models.Model):
     quantity_signals_to_send = models.IntegerField(verbose_name="Количество для отправки")
+    scanning_signals = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Настройки"

@@ -1,7 +1,8 @@
 from django.test import TestCase
 from unittest.mock import patch
 import pytest
-from ..services.signal_1 import check_of_green_and_red
+
+from trading.trade.services.signal_1 import check_of_green_and_red
 
 list_short = [
     ['3123123', '10', '432', '432', '4', '432', '432'],

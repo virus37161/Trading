@@ -10,8 +10,9 @@ def scan_signals(queryset):
     session = HTTP()
     data = now_time()
     for contract_obj in queryset:
+
         time_to_minus = time_that_need_minus(contract_obj, data)
-        if time_to_minus == None:
+        if (time_to_minus == None) or (contract_obj.activity == False and contract_obj.check_scan == False):
             continue
         s = session.get_kline(
             category="linear",
@@ -24,7 +25,13 @@ def scan_signals(queryset):
         if s.get('result').get('list')==[]:
             contract_obj.delete()
             continue
+
         tracking_signal(s, contract_obj)
+
+        if contract_obj.activity == False:
+            contract_obj.check_scan = True
+            contract_obj.save()
+
 
 def time_that_need_minus(contract_obj, data):
     dt_obj = datetime.strptime(f'{contract_obj.bar_time}', '%Y-%m-%d %H:%M:%S')

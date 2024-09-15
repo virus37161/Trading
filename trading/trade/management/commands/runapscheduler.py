@@ -8,13 +8,19 @@ from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from trade.services.signal_1 import scan_signals
+from trade.models import SettingsApp
 logger = logging.getLogger(__name__)
 
 
 # наша задача по выводу текста на экран
 def my_job():
     print("начало")
+    settings_of_app = SettingsApp.objects.get(id=1)
+    settings_of_app.scanning_signals = True
+    settings_of_app.save()
     scan_signals()
+    settings_of_app.scanning_signals = False
+    settings_of_app.save()
     print("Конец")
 
 
@@ -34,7 +40,7 @@ class Command(BaseCommand):
         # добавляем работу нашему задачнику
         scheduler.add_job(
             my_job,
-            trigger=CronTrigger(minute="*/5"),
+            trigger=CronTrigger(minute="*/2"),
             # То же, что и интервал, но задача тригера таким образом более понятна django
             id="my_job",  # уникальный айди
             max_instances=1,
